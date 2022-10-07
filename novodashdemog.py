@@ -1,4 +1,3 @@
-
 # !pip install streamlit -q
 # !pip install plotly
 # %%writefile app.py
@@ -49,7 +48,7 @@ x_M3 = data_c['M']
 x_F3 = data_c['F'] * -1
 import streamlit as st
 st.header("Demographics and baseline characteristics by treatment")
-chart_selector = st.sidebar.selectbox("Select the type of chart", ['Sunburst Chart','Population Pyramid A','Population Pyramid B','Population Pyramid C','Boxplot for BMI'])
+chart_selector = st.sidebar.selectbox("Select the type of chart", ['Sunburst Chart','Population Pyramid','Boxplot for BMI'])
 import plotly.express as px
 import plotly.graph_objects as gp
 if chart_selector=='Sunburst Chart':
@@ -64,21 +63,21 @@ if chart_selector=='Boxplot for BMI':
   st.write("### Boxplots for BMI in each arm by age groups")
   boxy = px.box(df_bas, x="SEX", y="BMIBL", color="ARM",facet_col="AGEGR1")
   st.plotly_chart(boxy,use_container_width = True)
-if chart_selector=="Population Pyramid A":
-  st.write("### Population Pyramid of Treatment A")
+if chart_selector=="Population Pyramid":
+  st.write("### Population Pyramid of Treatments")
   # Creating instance of the figure
-  fig = gp.Figure()
+  fig1 = gp.Figure()
   # Adding Male data to the figure
-  fig.add_trace(gp.Bar(y= y_age, x = x_M, 
+  fig1.add_trace(gp.Bar(y= y_age, x = x_M, 
                      name = 'Male', 
                      orientation = 'h'))
   
   # Adding Female data to the figure
-  fig.add_trace(gp.Bar(y = y_age, x = x_F,
+  fig1.add_trace(gp.Bar(y = y_age, x = x_F,
                      name = 'Female', orientation = 'h'))
   
   # Updating the layout for our graph
-  fig.update_layout(barmode = 'relative',
+  fig1.update_layout(title = 'Treatment A',barmode = 'relative',
                  bargap = 0.5, bargroupgap = 0.1,autosize=False,
       width=800,
       height=400,
@@ -95,22 +94,20 @@ if chart_selector=="Population Pyramid A":
                               title = 'Age Group',
                               title_font_size = 14), 
                  )
-  st.plotly_chart(fig,use_container_width = True)
-if chart_selector=="Population Pyramid B":
-  st.write("### Population Pyramid of Treatment B")
+  st.plotly_chart(fig1,use_container_width = True)
   # Creating instance of the figure
-  fig = gp.Figure()
+  fig2 = gp.Figure()
   # Adding Male data to the figure
-  fig.add_trace(gp.Bar(y= y_age2, x = x_M2, 
+  fig2.add_trace(gp.Bar(y= y_age2, x = x_M2, 
                      name = 'Male', 
                      orientation = 'h'))
   
   # Adding Female data to the figure
-  fig.add_trace(gp.Bar(y = y_age2, x = x_F2,
+  fig2.add_trace(gp.Bar(y = y_age2, x = x_F2,
                      name = 'Female', orientation = 'h'))
   
   # Updating the layout for our graph
-  fig.update_layout(barmode = 'relative',
+  fig2.update_layout(title = 'Treatment B',barmode = 'relative',
                  bargap = 0.5, bargroupgap = 0.1,autosize=False,
       width=800,
       height=400,
@@ -127,22 +124,20 @@ if chart_selector=="Population Pyramid B":
                               title = 'Age Group',
                               title_font_size = 14), 
                  )
-  st.plotly_chart(fig,use_container_width = True)
-if chart_selector=="Population Pyramid C":
-  st.write("## Population Pyramid of Treatment C")
+  st.plotly_chart(fig2,use_container_width = True)
   # Creating instance of the figure
-  fig = gp.Figure()
+  fig3 = gp.Figure()
   # Adding Male data to the figure
-  fig.add_trace(gp.Bar(y= y_age3, x = x_M3, 
+  fig3.add_trace(gp.Bar(y= y_age3, x = x_M3, 
                      name = 'Male', 
                      orientation = 'h'))
   
   # Adding Female data to the figure
-  fig.add_trace(gp.Bar(y = y_age3, x = x_F3,
+  fig3.add_trace(gp.Bar(y = y_age3, x = x_F3,
                      name = 'Female', orientation = 'h'))
   
   # Updating the layout for our graph
-  fig.update_layout(barmode = 'relative',
+  fig3.update_layout(title = 'Treatment C',barmode = 'relative',
                  bargap = 0.5, bargroupgap = 0.1,autosize=False,
       width=800,
       height=400,
@@ -159,6 +154,4 @@ if chart_selector=="Population Pyramid C":
                               title = 'Age Group',
                               title_font_size = 14), 
                  )
-  st.plotly_chart(fig,use_container_width = True)
-
-# ! streamlit run app.py & npx localtunnel --port 8501
+  st.plotly_chart(fig3,use_container_width = True)
